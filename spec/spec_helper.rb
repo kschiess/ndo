@@ -1,5 +1,7 @@
 require 'yaml'
 
+require 'ndo'
+
 def spec_file(*names)
   File.join(
     File.dirname(__FILE__), 

@@ -1,7 +1,7 @@
 require 'stringio'
 require 'open4'
 
-class Host
+class Ndo::Host
   attr_reader :name
   def initialize(hostname)
     @name = hostname
