@@ -8,7 +8,7 @@ describe Ndo::MultiCommand do
 end
 
 describe Ndo::MultiCommand, 'integration' do
-  let(:multi_cmd) { Ndo::MultiCommand.new('uname -a', spec_hosts) }
+  let(:multi_cmd) { Ndo::MultiCommand.new('cat /etc/hostname', spec_hosts) }
   
   context "result" do
     let(:result) { multi_cmd.run }
@@ -17,7 +17,7 @@ describe Ndo::MultiCommand, 'integration' do
       context "[#{host.inspect}]" do
         subject { result[host] }
 
-        it { should == '' }
+        it { should == host }
       end
     end
   end

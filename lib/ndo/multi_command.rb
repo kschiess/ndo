@@ -14,6 +14,6 @@ class Ndo::MultiCommand
   # Runs the command on all hosts. Returns a result collection. 
   #
   def run
-    Ndo::Results.new(command, hosts)
+    Ndo::Results.acquire(command, hosts)
   end
 end
