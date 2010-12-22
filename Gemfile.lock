@@ -3,6 +3,7 @@ GEM
   specs:
     diff-lcs (1.1.2)
     flexmock (0.8.11)
+    open4 (1.0.1)
     procrastinate (0.2.0)
       state_machine (~> 0.9.4)
     rspec (2.3.0)
@@ -20,5 +21,6 @@ PLATFORMS
 
 DEPENDENCIES
   flexmock
-  procrastinate
+  open4 (~> 1.0.1)
+  procrastinate (~> 0.2.0)
   rspec
