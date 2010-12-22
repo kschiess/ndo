@@ -16,7 +16,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "ndo"
-  s.version           = "0.1.0"
+  s.version           = "0.1.1"
   s.summary           = "Execute commands on multiple hosts at once."
   s.author            = "Kaspar Schiess"
   s.email             = "kaspar.schiess@absurd.li"
