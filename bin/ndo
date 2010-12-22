@@ -31,10 +31,13 @@ String.highlighter = hl
 
 results = Ndo::MultiCommand.new(command, hosts).run
 results.each do |host, output|
-  if output.chomp.index("\n")
+  output.chomp!
+  if output.index("\n")
     # Multiline output
-    printf "%20s:\n%s\n", host.bold, output
+    output.gsub!(/\n/, "\n    ")
+    output = "    "+output
+    printf "%s {\n%s}\n\n", host.bold, output
   else
-    printf "%20s %s\n", host.bold, output.chomp
+    printf "%-20s %s\n", host.bold, output
   end
 end
