@@ -1,4 +1,5 @@
 
+require 'ndo/results'
 require 'ndo/host'
 require 'procrastinate'
 
@@ -22,26 +23,12 @@ class Ndo::MultiCommand
     scheduler = Scheduler.start(SpawnStrategy::Throttled.new(5))
     proxy = scheduler.create_proxy(self)
 
-    Results.new.tap { |results| 
+    Ndo::Results.new.tap { |results| 
       hosts.each { |host|
         results.store host, proxy.run_for_host(host)
       }}
   ensure
     scheduler.shutdown
-  end
-  
-  class Results
-    def initialize
-      @map = Hash.new
-    end
-    
-    def [](host)
-      @map[host].value
-    end
-    
-    def store(host, future)
-      @map.store host, future
-    end
   end
   
   def run_for_host(host)

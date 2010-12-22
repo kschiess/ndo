@@ -1,2 +1,40 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: ndo [options] HOST_SET COMMAND"
+end
+optparse.parse!
+
+unless ARGV.size >= 2
+  puts optparse
+  puts
+  puts "You need to specify at least a host set and a command."
+  exit 1
+end
+
+host_set, *cmd_parts = ARGV
+command = cmd_parts.join(' ')
+  
+
+hosts = File.read(
+  File.join(ENV['HOME'], '.ndo', host_set)).
+  lines.map { |l| l.chomp.strip }
+  
+$:.unshift File.dirname(__FILE__) + "/../lib"
+require 'ndo'
+require 'text/highlight'
+
+hl = Text::ANSIHighlighter.new
+String.highlighter = hl
+
+results = Ndo::MultiCommand.new(command, hosts).run
+results.each do |host, output|
+  if output.chomp.index("\n")
+    # Multiline output
+    printf "%20s:\n%s\n", host.bold, output
+  else
+    printf "%20s %s\n", host.bold, output.chomp
+  end
+end
