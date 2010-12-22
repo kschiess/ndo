@@ -32,6 +32,10 @@ class Ndo::MultiCommand
   end
   
   def run_for_host(host)
-    Ndo::Host.new(host).run(@command).first
+    begin
+      Ndo::Host.new(host).run(@command).first
+    rescue => b
+      "Failure: #{b}"
+    end
   end
 end

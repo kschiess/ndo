@@ -10,7 +10,12 @@ class Ndo::Results
   
   include Enumerable
   def each
-    @map.each { |host, future| yield host, future.value }
+    @map.each { |host, future| 
+      begin
+        yield host, future.value
+      rescue Procrastinate::ChildDeath
+        
+      end }
   end
   
   def store(host, future)
