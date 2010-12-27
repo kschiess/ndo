@@ -33,7 +33,7 @@ spec = Gem::Specification.new do |s|
 
   s.add_dependency 'open4',          '~> 1.0.1'
   s.add_dependency 'procrastinate',  '~> 0.3.0'
-  s.add_dependency 'text-highlight'  '~> 1.0.0'
+  s.add_dependency 'text-highlight'  '~> 1.0.2'
 
   s.add_development_dependency("rspec")
   s.add_development_dependency("flexmock")
