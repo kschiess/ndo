@@ -1,16 +1,11 @@
-GIT
-  remote: git://github.com/kschiess/procrastinate.git
-  revision: 8ffc5c28bda0f685d100cf1da47b8b5fc248ff43
-  specs:
-    procrastinate (0.3.0)
-      state_machine (~> 0.9.4)
-
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.2)
     flexmock (0.8.11)
     open4 (1.0.1)
+    procrastinate (0.3.0)
+      state_machine (~> 0.9.4)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
       rspec-expectations (~> 2.3.0)
@@ -28,6 +23,6 @@ PLATFORMS
 DEPENDENCIES
   flexmock
   open4 (~> 1.0.1)
-  procrastinate!
+  procrastinate (~> 0.3.0)
   rspec
-  text-highlight
+  text-highlight (~> 1.0.0)
