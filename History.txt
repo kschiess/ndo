@@ -1,5 +1,9 @@
 
-= 0.1.2 / 27Dez2010
+= 0.2.1
+
+  * Maintenance; fixes gemspec for Ruby 1.9.2-p136.
+
+= 0.2.0 / 27Dez2010
 
   * Updated dependency to procrastinate (0.3) - now doesn't mess with the
     scheduler and will heed the number of cores on the target system.
