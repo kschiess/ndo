@@ -1,6 +1,9 @@
 require 'stringio'
 require 'open4'
 
+# Runs a command via ssh on a host. This is initially stolen from vlad (the
+# deployer), then rewritten and modified. 
+#
 class Ndo::Host
   attr_reader :name
   def initialize(hostname)

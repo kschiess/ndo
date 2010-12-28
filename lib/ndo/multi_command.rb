@@ -34,7 +34,7 @@ class Ndo::MultiCommand
     begin
       Ndo::Host.new(host).run(@command).first
     rescue => b
-      "Failure: #{b}"
+      b
     end
   end
 end

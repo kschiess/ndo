@@ -5,17 +5,19 @@ class Ndo::Results
   end
   
   def [](host)
-    @map[host].value
+    begin 
+      val = @map[host].value
+      # Swallow exception returns.
+      val.instance_of?(String) ? val : nil
+    rescue Procrastinate::ChildDeath
+      nil
+    end
   end
   
   include Enumerable
   def each
-    @map.each { |host, future| 
-      begin
-        yield host, future.value
-      rescue Procrastinate::ChildDeath
-        
-      end }
+    @map.each { |host, _| 
+      yield host, self[host] }
   end
   
   def store(host, future)

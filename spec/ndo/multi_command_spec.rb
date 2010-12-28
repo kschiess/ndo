@@ -8,17 +8,26 @@ describe Ndo::MultiCommand do
 end
 
 describe Ndo::MultiCommand, 'integration' do
-  let(:multi_cmd) { Ndo::MultiCommand.new('cat /etc/hostname', spec_hosts) }
   
-  context "result" do
+  context "when the command suceeds (spec_hosts)" do
+    let(:multi_cmd) { Ndo::MultiCommand.new('cat /etc/hostname', spec_hosts) }
     let(:result) { multi_cmd.run }
-    
+
     spec_hosts.each do |host|
       context "[#{host.inspect}]" do
         subject { result[host] }
 
         it { should == host }
       end
+    end
+  end
+  context "when the command fails" do
+    let(:multi_cmd) { Ndo::MultiCommand.new('failing command', %w(unknown)) }
+    
+    context "result['unknown']" do
+      subject { multi_cmd.run['unknown'] }
+      
+      it { should be_nil }
     end
   end
 end
