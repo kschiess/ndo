@@ -31,6 +31,11 @@ String.highlighter = hl
 
 results = Ndo::MultiCommand.new(command, hosts).run
 results.each do |host, output|
+  unless output
+    printf "%-20s %s\n", host.bold, "(error, no output)"
+    next
+  end
+  
   output.chomp!
   if output.index("\n")
     # Multiline output
