@@ -22,7 +22,7 @@ PLATFORMS
 
 DEPENDENCIES
   flexmock
-  open4 (~> 1.0.1)
-  procrastinate (~> 0.3.0)
+  open4 (>= 0.9)
+  procrastinate (~> 0.3)
   rspec
-  text-highlight (~> 1.0.0)
+  text-highlight (~> 1.0)
