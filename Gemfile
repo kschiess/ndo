@@ -7,4 +7,8 @@ gem 'text-highlight', '~> 1.0'
 group :development do
   gem 'rspec'
   gem 'flexmock'
+  
+  gem 'guard'
+  gem 'rb-fsevent'
+  gem 'growl'
 end

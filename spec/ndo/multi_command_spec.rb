@@ -15,7 +15,7 @@ describe Ndo::MultiCommand, 'integration' do
 
     spec_hosts.each do |host|
       context "[#{host.inspect}]" do
-        subject { result[host] }
+        subject { result[host].chomp }
 
         it { should == host }
       end
