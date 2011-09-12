@@ -9,9 +9,8 @@ module Ndo
       status.success?
     end
     def close_all
-      stdin.close
-      stdout.close
-      stderr.close
+      [stdin, stdout, stderr].
+        each(&:close)
     end
   end
   
