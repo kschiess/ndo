@@ -23,61 +23,65 @@ class Ndo::Host
     end
   end
   
-  def run command
-    cmd = ['ssh', name, command].flatten
-    result = []
-
-    pid, inn, out, err = Open4.popen4(*cmd)
-
-    inn.sync   = true
-    streams    = [out, err]
-    out_stream = {
-      out => StringIO.new,
-      err => StringIO.new,
-    }
-
-    # Handle process termination ourselves
-    status = nil
-    Thread.start do
-      status = Process.waitpid2(pid).last
+  class Accumulator
+    attr_reader :buffer
+    
+    def initialize(stream)
+      @stream = stream
+      @buffer = ''
+      @eof = false
     end
-
-    until streams.empty? do
-      # don't busy loop
-      selected, = select streams, nil, nil, 0.1
-
-      next if selected.nil? or selected.empty?
-
-      selected.each do |stream|
-        if stream.eof? then
-          streams.delete stream if status # we've quit, so no more writing
-          next
-        end
-
-        data = stream.readpartial(1024)
-        out_stream[stream].write data
-        # 
-        # if stream == err and data =~ sudo_prompt then
-        #   inn.puts sudo_password
-        #   data << "\n"
-        #   $stderr.write "\n"
-        # end
-
-        result << data
+    
+    def copy_if_ready(ready_list)
+      return unless ready_list.include?(@stream)
+      
+      begin
+        @buffer << @stream.read_nonblock(1024)
       end
+    rescue EOFError
+      @eof = true
     end
-
-    unless status.success? then
+    
+    def eof?
+      @eof || @stream.eof?
+    end
+  end
+  
+  def run(command)
+    cmd = ['ssh', name, command].flatten
+    
+    process = Ndo.popen(*cmd)
+    accums = [
+      Accumulator.new(process.stdout), 
+      Accumulator.new(process.stderr)]
+    
+    # Copy stdout, stderr to buffers
+    loop do
+      ready,_,_ = IO.select([process.stdout, process.stderr])
+      
+      # Test for process closed
+      break if accums.all? { |acc| acc.eof? }
+      
+      # Copy data
+      accums.each { |acc| acc.copy_if_ready(ready) }
+    end
+    
+    # We're done reading: prepare return value
+    buffers = accums.map { |acc| acc.buffer  }
+    
+    # Raise ExecutionFailure if the command failed
+    unless process.success?
+      status = process.status
       raise ExecutionFailure.new(
         "Command failed (#{status.inspect})", 
-        *streams.map { |strm| out_stream[strm].string }
+        *buffers
       )
     end
-
-    out_stream.map { |io, copy| copy.string }
+    
+    # Return [STDOUT, STDERR] buffers
+    buffers
+    
   ensure
-    inn.close rescue nil
-    out.close rescue nil
-    err.close rescue nil
+    process.close_all
   end
 end

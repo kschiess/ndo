@@ -3,7 +3,6 @@ require 'procrastinate'
 require 'procrastinate/implicit'
 
 require 'ndo/results'
-require 'ndo/host'
 
 # A class to execute a command on a list of hosts in parallel; allows access
 # to results and is thus a) multi threaded and b) Ruby 1.9.2 only. 

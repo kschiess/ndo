@@ -11,3 +11,8 @@ end
 def spec_hosts
   YAML.load_file(spec_file('config', 'hosts.yaml'))
 end
+
+def slet(sym, &block)
+  let(sym, &block)
+  subject { self.send(sym) }
+end
