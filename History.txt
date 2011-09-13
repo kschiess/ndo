@@ -1,5 +1,5 @@
 
-= 0.2.2 / 
+= 0.2.3 / 13Sep2011 
 
   * Some sort of proper error handling. 
   
