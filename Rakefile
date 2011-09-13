@@ -30,7 +30,6 @@ spec = Gem::Specification.new do |s|
   s.executables       = FileList["bin/**"].map { |f| File.basename(f) }
   s.require_paths     = ["lib"]
 
-  s.add_dependency 'open4',          '>= 0.9'
   s.add_dependency 'procrastinate',  '~> 0.3'
   s.add_dependency 'text-highlight', '~> 1.0'
 
