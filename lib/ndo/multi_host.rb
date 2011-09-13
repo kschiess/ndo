@@ -5,31 +5,31 @@ require 'procrastinate/implicit'
 # A class to execute a command on a list of hosts in parallel; allows access
 # to results and is thus a) multi threaded and b) Ruby 1.9.2 only. 
 #
-class Ndo::MultiCommand
+class Ndo::MultiHost
   include Procrastinate
 
-  attr_reader :command
   attr_reader :hosts
   
-  def initialize(command, hosts)
-    @command  = command
+  def initialize(hosts)
     @hosts    = hosts
   end
   
   # Runs the command on all hosts. Returns a result collection. 
   #
-  def run
+  def run(command)
     proxy = Procrastinate.proxy(self)
 
-    Ndo::Results.new.tap { |results| 
-      hosts.each { |host|
-        results.store host, proxy.run_for_host(host)
-      }}
+    hosts.inject(Hash.new) do |hash, host_name|
+      hash[host_name] = Ndo::Result.new(
+        host_name, 
+        proxy.run_for_host(command, host_name))
+      hash
+    end
   end
   
-  def run_for_host(host)
+  def run_for_host(command, host)
     begin
-      Ndo::Host.new(host).run(@command).first
+      Ndo::Host.new(host).run(command)
     rescue => b
       b
     end

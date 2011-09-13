@@ -29,9 +29,10 @@ require 'text/highlight'
 hl = Text::ANSIHighlighter.new
 String.highlighter = hl
 
-results = Ndo::MultiCommand.new(command, hosts).run
-results.each do |host, output|
-  output.chomp!
+results = Ndo::MultiHost.new(hosts).run(command)
+results.each do |host, result|
+  output = result.stdout.chomp
+  
   if output.index("\n")
     # Multiline output
     output.gsub!(/\n/, "\n    ")
