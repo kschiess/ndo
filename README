@@ -1,0 +1,33 @@
+ndo does things N times. 
+
+SYNOPSIS
+
+  mc = Ndo::MultiCommand.new('uname -n', %w(hostA hostB hostC))
+  results = mc.run
+  
+  results['hostA'] # => 'hostA'
+  results.each do |result|
+    result # => "hostA", "hostB", "hostC"
+  end
+  
+ON THE COMMAND LINE
+
+1) Create a host set
+
+A host set is a file in below ~/.ndo that contains a list of host names,
+separated by newlines. Easily generated. 
+
+2) Run a command on a host set
+
+  $ ndo my_host_set ls
+  callisto     Tue Sep 13 09:17:41 CEST 2011
+  cyllene      Tue Sep 13 09:17:41 CEST 2011
+  helike       Tue Sep 13 09:17:41 CEST 2011
+  himalia      Tue Sep 13 09:17:41 CEST 2011
+  
+As you can see, it appears that time synch works on these machines. 
+
+STATUS
+
+This is a very early version; It could handle errors better. That said, ndo is
+a very useful tool that can replace vlad or capistrano for easy things. 
