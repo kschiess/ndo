@@ -9,6 +9,7 @@ group :development do
   gem 'flexmock'
   
   gem 'guard'
+  gem 'guard-rspec'
   gem 'rb-fsevent'
-  gem 'growl'
+  gem 'growl_notify'
 end

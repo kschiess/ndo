@@ -5,3 +5,4 @@ end
 
 require 'ndo/host'
 require 'ndo/popen'
+require 'ndo/result'

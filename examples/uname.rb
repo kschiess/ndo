@@ -6,14 +6,11 @@ $:.unshift File.dirname(__FILE__) + "/../lib"
 require 'ndo'
 
 # mh = Ndo::MultiCommand.new('uname -n', %w(hostA hostB))
-mh = Ndo::MultiCommand.new('uname -n 1>&2', %w(leda kale))
+mh = Ndo::MultiCommand.new('date', %w(leda)*10)
 
-results['host'].value
-results['host'].success?
-
-results = mh.run
-results.each do |result|
-  result.value
-  result.success?
-  p result
+loop do
+  results = mh.run
+  results.each do |host, result|
+    [host, result]
+  end
 end
