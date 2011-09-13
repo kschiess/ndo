@@ -1,9 +1,12 @@
 
 module Ndo
-  Process = Struct.new(:pid, :thread, :stdin, :stdout, :stderr) do
+  Process = Struct.new(:pid, :stdin, :stdout, :stderr) do
     def status
-      thread.join
-      thread.value
+      wait unless @status
+      @status
+    end
+    def wait
+      _, @status = ::Process.waitpid2(pid)
     end
     def success?
       status.success?
@@ -45,8 +48,7 @@ module Ndo
     c_err.write.close
     
     # c_in.sync = true
-    thread = ::Process.detach(pid)
-    Process.new(pid, thread, c_in.write, c_out.read, c_err.read)
+    Process.new(pid, c_in.write, c_out.read, c_err.read)
   end
   module_function :popen
 end

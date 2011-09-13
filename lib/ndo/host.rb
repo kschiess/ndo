@@ -35,15 +35,13 @@ class Ndo::Host
     def copy_if_ready(ready_list)
       return unless ready_list.include?(@stream)
       
-      begin
-        @buffer << @stream.read_nonblock(1024)
-      end
+      @buffer << @stream.read_nonblock(1024)
     rescue EOFError
       @eof = true
     end
     
     def eof?
-      @eof || @stream.eof?
+      @eof
     end
   end
   
@@ -57,10 +55,11 @@ class Ndo::Host
     
     # Copy stdout, stderr to buffers
     loop do
-      ready,_,_ = IO.select([process.stdout, process.stderr])
+      ios = [process.stdout, process.stderr]
+      ready,_,_ = IO.select(ios)
       
       # Test for process closed
-      break if accums.all? { |acc| acc.eof? }
+      break if accums.any? { |acc| acc.eof? }
       
       # Copy data
       accums.each { |acc| acc.copy_if_ready(ready) }
@@ -68,6 +67,8 @@ class Ndo::Host
     
     # We're done reading: prepare return value
     buffers = accums.map { |acc| acc.buffer  }
+    
+    process.wait 
     
     # Raise ExecutionFailure if the command failed
     unless process.success?
@@ -80,7 +81,6 @@ class Ndo::Host
     
     # Return [STDOUT, STDERR] buffers
     buffers
-    
   ensure
     process.close_all
   end
