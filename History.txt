@@ -1,4 +1,9 @@
 
+= 0.2.4 / 3Oct2011
+
+  ! fixes bug that would crash bin/ndo when a host returned a non-null error
+    code. Now just doesn't display hosts with errcode>0 anymore. 
+
 = 0.2.3 / 13Sep2011 
 
   * Some sort of proper error handling. 
