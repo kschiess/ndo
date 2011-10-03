@@ -5,6 +5,7 @@ gem 'procrastinate',  '~> 0.3'
 gem 'text-highlight', '~> 1.0'
 
 group :development do
+  gem 'rake'
   gem 'rspec'
   gem 'flexmock'
   
