@@ -31,6 +31,8 @@ String.highlighter = hl
 
 results = Ndo::MultiHost.new(hosts).run(command)
 results.each do |host, result|
+  next unless result.success?
+  
   output = result.stdout.chomp
   
   if output.index("\n")
