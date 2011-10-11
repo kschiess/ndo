@@ -16,3 +16,7 @@ def slet(sym, &block)
   let(sym, &block)
   subject { self.send(sym) }
 end
+
+def project_root
+  File.expand_path(File.basename(__FILE__) + "/../")
+end

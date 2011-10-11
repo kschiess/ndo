@@ -18,9 +18,14 @@ host_set, *cmd_parts = ARGV
 command = cmd_parts.join(' ')
   
 
-hosts = File.read(
-  File.join(ENV['HOME'], '.ndo', host_set)).
-  lines.map { |l| l.chomp.strip }
+hosts = if host_set == '-'
+  # stdin
+  STDIN.readlines.map { |l| l.chomp }
+else
+  File.read(
+    File.join(ENV['HOME'], '.ndo', host_set)).
+    lines.map { |l| l.chomp.strip }
+end
   
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require 'ndo'
