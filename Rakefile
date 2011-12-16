@@ -8,6 +8,7 @@ task :default => :spec
 
 # This task actually builds the gem. 
 task :gem => :spec
+task :gem => :build_man
 spec = eval(File.read('ndo.gemspec'))
 
 desc "Generate the gem package."
