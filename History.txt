@@ -1,5 +1,5 @@
 
-= 0.2.5 / ???
+= 0.2.5 / 16Dez2011
 
   ! Allows '-' (dash) in commands (removal of OptionParser).
   
