@@ -1,5 +1,4 @@
 require 'stringio'
-require 'open4'
 
 # Runs a command via ssh on a host. This is initially stolen from vlad (the
 # deployer), then rewritten and modified. 
