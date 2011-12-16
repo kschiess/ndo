@@ -1,4 +1,8 @@
 
+= 0.2.5 / ???
+
+  ! Allows '-' (dash) in commands (removal of OptionParser).
+
 = 0.2.4 / 3Oct2011
 
   ! fixes bug that would crash bin/ndo when a host returned a non-null error
