@@ -4,7 +4,8 @@ gem 'open4',          '>= 0.9'
 gem 'procrastinate',  '~> 0.3'
 gem 'text-highlight', '~> 1.0'
 
-group :development do
+group :development do 
+  gem 'ronn'
   gem 'rake'
   gem 'rspec'
   gem 'flexmock'

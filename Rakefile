@@ -26,3 +26,8 @@ desc 'Clear out RDoc and generated packages'
 task :clean => [:clobber_rdoc, :clobber_package] do
   rm "#{spec.name}.gemspec"
 end
+
+desc "Build manual"
+task :build_man do
+  sh "ronn -br5 man/*.ronn"
+end

@@ -9,13 +9,17 @@ Gem::Specification.new do |s|
   s.email = %q{kaspar.schiess@absurd.li}
   s.executables = ["ndo"]
   s.extra_rdoc_files = ["README"]
-  s.files = %w(Gemfile HISTORY.txt LICENSE Rakefile README) + Dir.glob("{lib,examples,bin}/**/*")
+  
+  s.files = %w(Gemfile HISTORY.txt LICENSE Rakefile README)
+  s.files += Dir.glob("{lib,examples,bin}/**/*")
+  s.files += Dir.glob("man/**/*")
+  
   s.homepage = %q{http://blog.absurd.li}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.summary = %q{Execute commands on multiple hosts at once.}
 
-  s.add_dependency(%q<procrastinate>, ["~> 0.3"])
+  s.add_dependency(%q<procrastinate>, ["~> 0.4"])
   s.add_dependency(%q<text-highlight>, ["~> 1.0"])
   
   s.add_development_dependency(%q<rspec>, [">= 0"])
