@@ -2,13 +2,8 @@
 
 require 'optparse'
 
-optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: ndo [options] HOST_SET COMMAND"
-end
-optparse.parse!
-
 unless ARGV.size >= 2
-  puts optparse
+  puts "Usage: ndo [options] HOST_SET COMMAND"
   puts
   puts "You need to specify at least a host set and a command."
   exit 1
