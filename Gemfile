@@ -1,7 +1,6 @@
 source "http://rubygems.org"
 
-gem 'procrastinate',  '~> 0.3'
-gem 'text-highlight', '~> 1.0'
+gemspec
 
 group :development do 
   gem 'ronn'
